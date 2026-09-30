@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mera.work Pulse — AI Social Growth & Competitor Studio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- jsPDF for direct PDF compilation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#221C35',       // Dark purple from 'mera'
+              primary: '#673AB7',    // Vibrant icon purple
+              accent: '#7C4DFF',     // Bright neon violet
+              light: '#E5DCFA',      // Lavender ring tone
+              surface: '#151122',    // Deep dark background
+              card: '#1F1833',       // Card surface
+              border: '#332952',     // Subtle border
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0E0B16;
+      color: #E2E8F0;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #151122;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #3B2D64;
+      border-radius: 4px;
+    }
+    .pulse-glow {
+      box-shadow: 0 0 25px rgba(124, 77, 255, 0.25);
+    }
+    .logo-gradient-text {
+      background: linear-gradient(135deg, #7C4DFF 0%, #B388FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col custom-scroll">
+
+  <!-- ================= TOP NAV BAR ================= -->
+  <header class="border-b border-brand-border bg-brand-surface/90 backdrop-blur-md sticky top-0 z-50 px-6 py-3.5 flex items-center justify-between">
+    <div class="flex items-center space-x-4">
+      <!-- SVG Recreation of the Exact mera.work Logo -->
+      <div class="flex items-center space-x-2.5">
+        <svg class="h-10 w-auto" viewBox="0 0 450 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="mainPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#7C4DFF" />
+              <stop offset="100%" stop-color="#512DA8" />
+            </linearGradient>
+            <linearGradient id="needleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#9C6BFF" />
+              <stop offset="100%" stop-color="#4A148C" />
+            </linearGradient>
+          </defs>
+          <!-- Clock Ring Top Arc (Light Violet) -->
+          <path d="M 85 45 A 58 58 0 0 1 125 45" stroke="#E1D5FA" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <!-- Clock Ring Bottom Arc (Light Violet) -->
+          <path d="M 85 145 A 58 58 0 0 0 125 145" stroke="#E1D5FA" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <!-- Main Left Purple Arc -->
+          <path d="M 75 58 A 58 58 0 1 0 75 132" stroke="url(#mainPurple)" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <!-- Main Right Purple Arc -->
+          <path d="M 135 132 A 58 58 0 0 0 135 58" stroke="url(#mainPurple)" stroke-width="26" stroke-linecap="round" fill="none"/>
+          <!-- Clock Hands Forming Check / Clock V -->
+          <path d="M 72 48 L 105 95 L 165 35" stroke="url(#needleGrad)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="105" cy="95" r="14" fill="url(#mainPurple)"/>
+          <!-- "mera" dark navy text -->
+          <text x="185" y="103" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="76" fill="#FFFFFF" letter-spacing="-1.5">mera</text>
+          <text x="352" y="52" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="700" font-size="20" fill="#FFFFFF">®</text>
+          <!-- "work" purple text -->
+          <text x="187" y="158" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="64" fill="#7C4DFF" letter-spacing="-1">work</text>
+        </svg>
+      </div>
+
+      <span class="text-xs px-2.5 py-1 rounded-full bg-brand-primary/20 text-brand-light border border-brand-primary/40 font-semibold tracking-wide">
+        AUTONOMOUS SOCIAL ENGINE
+      </span>
+    </div>
+
+    <!-- Center Safe Status Pill -->
+    <div class="hidden md:flex items-center space-x-6 text-xs">
+      <div class="flex items-center space-x-2 bg-brand-card/90 px-3.5 py-1.5 rounded-full border border-brand-border">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="text-emerald-300 font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved"></i> 24/7 Zero-Ban Mode: Active
+        </span>
+      </div>
+      <div class="text-slate-400">
+        Platform Target: <span class="text-white font-medium">mera.work</span>
+      </div>
+      <div class="text-slate-400">
+        Next Crawler Scan: <span id="scanCountdown" class="text-brand-accent font-mono font-bold">03:42:15</span>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex items-center space-x-3">
+      <button onclick="triggerEngineRun()" id="forceRunBtn" class="flex items-center space-x-2 bg-gradient-to-r from-brand-primary to-brand-accent hover:opacity-95 text-white text-xs font-bold px-4 py-2 rounded-lg transition shadow-lg shadow-brand-primary/30">
+        <i class="fa-solid fa-bolt-lightning"></i>
+        <span>Trigger Daily Ingestion</span>
+      </button>
+      <div class="w-9 h-9 rounded-full bg-brand-primary/30 border border-brand-accent/50 flex items-center justify-center text-brand-light font-bold text-sm">
+        MW
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= SUB-BANNER ================= -->
+  <div class="bg-gradient-to-r from-brand-surface via-brand-card to-brand-surface border-b border-brand-border/60 px-6 py-2 text-xs flex justify-between items-center text-slate-300">
+    <div class="flex items-center space-x-4">
+      <span class="flex items-center text-brand-light font-medium"><i class="fa-brands fa-linkedin text-brand-accent mr-1.5 text-sm"></i> Official Compliance: Protected</span>
+      <span class="hidden sm:inline text-slate-500">•</span>
+      <span class="hidden sm:inline text-slate-400">Method: Headless Open-Signal Radar (Zero Session Injection)</span>
+    </div>
+    <div class="flex items-center space-x-3 text-slate-400">
+      <span>Monitored Competitors: <strong class="text-slate-200">Hubstaff, Time Doctor, Insightful, DeskTime</strong></span>
+    </div>
+  </div>
+
+  <!-- ================= MAIN LAYOUT ================= -->
+  <div class="flex-1 max-w-[1720px] w-full mx-auto p-5 grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+    <!-- LEFT COLUMN: 24/7 Intel, Competitor Pulse & Telemetry (4 Cols) -->
+    <div class="xl:col-span-4 space-y-6">
+
+      <!-- Status Card -->
+      <div class="bg-brand-card rounded-2xl p-5 border border-brand-border pulse-glow">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center">
+            <i class="fa-solid fa-heart-pulse text-brand-accent mr-2"></i>
+            24/7 Engine Telemetry
+          </h2>
+          <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">HEALTHY</span>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3 mb-4">
+          <div class="bg-brand-surface/60 p-3 rounded-xl border border-brand-border/50 text-center">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Signals Ingested</span>
+            <span id="statSignals" class="text-xl font-bold text-white mt-1">1,842</span>
+          </div>
+          <div class="bg-brand-surface/60 p-3 rounded-xl border border-brand-border/50 text-center">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Trends Indexed</span>
+            <span class="text-xl font-bold text-brand-light mt-1">47</span>
+          </div>
+          <div class="bg-brand-surface/60 p-3 rounded-xl border border-brand-border/50 text-center">
+            <span class="text-[10px] text-slate-400 uppercase font-semibold block">Safety Index</span>
+            <span class="text-xl font-bold text-emerald-400 mt-1">100%</span>
+          </div>
+        </div>
+
+        <div class="text-xs space-y-2 bg-brand-surface/40 p-3 rounded-xl border border-brand-border/40">
+          <div class="flex justify-between text-slate-400">
+            <span>Target Domain:</span>
+            <span class="text-brand-accent font-semibold">mera.work</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>Primary Category:</span>
+            <span class="text-slate-200">Workforce Analytics & Visibility</span>
+          </div>
+          <div class="flex justify-between text-slate-400">
+            <span>Anti-Micromanagement Filter:</span>
+            <span class="text-emerald-400 font-medium">Enabled (Active)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Competitor & Trending Radar -->
+      <div class="bg-brand-card rounded-2xl p-5 border border-brand-border">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 flex items-center">
+            <i class="fa-solid fa-radar text-brand-accent mr-2"></i>
+            Competitor Signals & Buzz
+          </h2>
+          <span class="text-[11px] text-slate-400">Updated 8m ago</span>
+        </div>
+
+        <div class="space-y-3" id="signalsFeed">
+          <!-- Signal 1 -->
+          <div class="p-3 bg-brand-surface/70 rounded-xl border border-brand-border/60 hover:border-brand-primary/60 transition group cursor-pointer" onclick="loadStrategicPillar(0)">
+            <div class="flex items-center justify-between text-[11px] mb-1.5">
+              <span class="font-bold text-brand-light group-hover:text-brand-accent transition flex items-center">
+                <i class="fa-solid fa-arrow-trend-up text-xs mr-1 text-emerald-400"></i> Hubstaff Competitor Trend
+              </span>
+              <span class="bg-rose-500/10 text-rose-300 px-2 py-0.5 rounded text-[10px] border border-rose-500/20">Spike in Screenshot Backlash</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed font-normal">
+              Users complain about invasive screenshotting. <strong>Opportunity for mera.work:</strong> Promote outcome-based proof of work without spying.
+            </p>
+          </div>
+
+          <!-- Signal 2 -->
+          <div class="p-3 bg-brand-surface/70 rounded-xl border border-brand-border/60 hover:border-brand-primary/60 transition group cursor-pointer" onclick="loadStrategicPillar(1)">
+            <div class="flex items-center justify-between text-[11px] mb-1.5">
+              <span class="font-bold text-brand-light group-hover:text-brand-accent transition flex items-center">
+                <i class="fa-solid fa-fire-flame-curved text-xs mr-1 text-amber-400"></i> Time Doctor Topic
+              </span>
+              <span class="bg-amber-500/10 text-amber-300 px-2 py-0.5 rounded text-[10px] border border-amber-500/20">Mouse Jiggler Fatigue</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed font-normal">
+              Debate on mouse jigglers vs actual productivity. <strong>mera.work Angle:</strong> Activity metrics are useless; real-time task velocity matters.
+            </p>
+          </div>
+
+          <!-- Signal 3 -->
+          <div class="p-3 bg-brand-surface/70 rounded-xl border border-brand-border/60 hover:border-brand-primary/60 transition group cursor-pointer" onclick="loadStrategicPillar(2)">
+            <div class="flex items-center justify-between text-[11px] mb-1.5">
+              <span class="font-bold text-brand-light group-hover:text-brand-accent transition flex items-center">
+                <i class="fa-solid fa-users text-xs mr-1 text-blue-400"></i> Remote IT / Agency Segment
+              </span>
+              <span class="bg-blue-500/10 text-blue-300 px-2 py-0.5 rounded text-[10px] border border-blue-500/20">Billing Transparency</span>
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed font-normal">
+              Agency heads seeking automated client-ready timesheets. <strong>mera.work Angle:</strong> 1-click audit-proof client reports.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick AI Brand Context Card -->
+      <div class="bg-gradient-to-br from-brand-card to-brand-surface p-5 rounded-2xl border border-brand-border text-xs text-slate-400 space-y-3">
+        <div class="flex items-center text-white font-bold text-sm">
+          <i class="fa-solid fa-bullseye text-brand-accent mr-2"></i> Content Optimization Engine
+        </div>
+        <p>
+          Content is calibrated for Founders, Operations Directors, and IT Agency Leaders with a focus on trust-based visibility instead of toxic micromanagement.
+        </p>
+        <div class="flex flex-wrap gap-1.5 pt-1">
+          <span class="bg-brand-primary/20 text-brand-light px-2 py-0.5 rounded text-[10px] border border-brand-primary/30">#ProductivityWithoutMicromanagement</span>
+          <span class="bg-brand-primary/20 text-brand-light px-2 py-0.5 rounded text-[10px] border border-brand-primary/30">#WorkforceAnalytics</span>
+          <span class="bg-brand-primary/20 text-brand-light px-2 py-0.5 rounded text-[10px] border border-brand-primary/30">#RemoteTeamScaling</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER & RIGHT: Content Strategy, Multi-Modal Studio & Generation (8 Cols) -->
+    <div class="xl:col-span-8 space-y-6">
+
+      <!-- Week Strategy Header & Day Tabs -->
+      <div class="bg-brand-card rounded-2xl p-5 border border-brand-border">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-brand-border gap-3">
+          <div>
+            <span class="text-xs text-brand-accent font-bold uppercase tracking-wider">Weekly Content Plan</span>
+            <h1 class="text-lg md:text-xl font-extrabold text-white mt-0.5">
+              Theme: <span class="logo-gradient-text" id="weekThemeTitle">"The Death of Invasive Surveillance: Building High-Velocity Teams"</span>
+            </h1>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="regenerateCopy()" class="px-3 py-1.5 rounded-lg bg-brand-surface border border-brand-border hover:border-brand-accent text-xs font-semibold text-slate-300 transition flex items-center gap-1.5">
+              <i class="fa-solid fa-arrows-rotate text-brand-accent"></i> Regenerate Variations
+            </button>
+          </div>
+        </div>
+
+        <!-- 5-Day Selector Tabs -->
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-4" id="dayTabsContainer">
+          <!-- Generated via JS -->
+        </div>
+      </div>
+
+      <!-- Active Post & Studio Tabs -->
+      <div class="bg-brand-card rounded-2xl border border-brand-border overflow-hidden">
+        <!-- Tab Navigation (Post Copy vs Multi-Modal Studio) -->
+        <div class="flex border-b border-brand-border bg-brand-surface/80 px-4 pt-3 space-x-3 text-xs">
+          <button onclick="switchMode('copy')" id="tabBtnCopy" class="px-4 py-2.5 rounded-t-lg font-bold border-b-2 border-brand-accent text-white flex items-center gap-2">
+            <i class="fa-solid fa-file-lines text-brand-accent"></i> Formatted LinkedIn Copy
+          </button>
+          <button onclick="switchMode('carousel')" id="tabBtnCarousel" class="px-4 py-2.5 rounded-t-lg font-semibold border-b-2 border-transparent text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-brand-accent"></i> Document Carousel Builder
+          </button>
+          <button onclick="switchMode('infographic')" id="tabBtnInfographic" class="px-4 py-2.5 rounded-t-lg font-semibold border-b-2 border-transparent text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-chart-simple text-brand-accent"></i> Visual Infographic
+          </button>
+          <button onclick="switchMode('video')" id="tabBtnVideo" class="px-4 py-2.5 rounded-t-lg font-semibold border-b-2 border-transparent text-slate-400 hover:text-white flex items-center gap-2">
+            <i class="fa-solid fa-video text-brand-accent"></i> Kinetic Video Reel
+          </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="p-6">
+
+          <!-- 1. COPY VIEW -->
+          <div id="viewCopy" class="space-y-4">
+            <div class="flex items-center justify-between bg-brand-surface p-3 rounded-xl border border-brand-border">
+              <div class="flex items-center space-x-3 text-xs">
+                <span class="font-bold text-white" id="postDayLabel">Monday — Carousel Post</span>
+                <span class="text-slate-500">•</span>
+                <span class="text-slate-400" id="postTargetPersona">Audience: Founders & Tech Leads</span>
+              </div>
+              <button onclick="copyPostToClipboard()" class="px-3 py-1.5 rounded-lg bg-brand-primary hover:bg-brand-accent text-white text-xs font-bold transition flex items-center gap-1.5 shadow-md">
+                <i class="fa-regular fa-copy"></i>
+                <span id="copyBtnText">Copy Post Copy</span>
+              </button>
+            </div>
+
+            <!-- Post Textarea Container -->
+            <div class="relative">
+              <textarea id="postCopyArea" rows="13" class="w-full bg-brand-surface/90 text-slate-100 rounded-xl p-4 text-sm font-sans leading-relaxed border border-brand-border focus:border-brand-accent outline-none custom-scroll resize-y" spellcheck="false"></textarea>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between text-xs text-slate-400 pt-1">
+              <span>Includes hook formatting, spacing, and direct link to <strong class="text-brand-accent">mera.work</strong></span>
+              <span id="charCount" class="font-mono">1,120 characters</span>
+            </div>
+          </div>
+
+          <!-- 2. CAROUSEL STUDIO VIEW -->
+          <div id="viewCarousel" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 bg-brand-surface p-4 rounded-xl border border-brand-border">
+              <div>
+                <h3 class="text-sm font-bold text-white">LinkedIn PDF Carousel Document Generator</h3>
+                <p class="text-xs text-slate-400">Square 1080x1080 slides styled with the official mera.work palette.</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <button onclick="downloadCurrentSlide()" class="px-3 py-1.5 rounded-lg bg-brand-card hover:bg-brand-border text-white text-xs font-semibold border border-brand-border transition flex items-center gap-1.5">
+                  <i class="fa-solid fa-image"></i> Export Current Slide PNG
+                </button>
+                <button onclick="downloadFullCarouselPDF()" class="px-4 py-1.5 rounded-lg bg-brand-primary hover:bg-brand-accent text-white text-xs font-bold transition flex items-center gap-1.5 shadow-lg shadow-brand-primary/20">
+                  <i class="fa-solid fa-file-pdf"></i> Download Complete PDF Carousel
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Carousel Workstation -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <!-- Left: Canvas Preview -->
+              <div class="lg:col-span-7 flex flex-col items-center">
+                <div class="relative border-4 border-brand-border rounded-2xl overflow-hidden shadow-2xl bg-black">
+                  <canvas id="carouselCanvas" width="540" height="540" class="w-full max-w-[420px] aspect-square block"></canvas>
+                </div>
+                <!-- Slide Controls -->
+                <div class="flex items-center space-x-4 mt-4 text-xs">
+                  <button onclick="prevSlide()" class="w-8 h-8 rounded-full bg-brand-card hover:bg-brand-border border border-brand-border flex items-center justify-center text-white">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+                  <span id="slideIndicator" class="font-bold text-slate-300">Slide 1 of 5</span>
+                  <button onclick="nextSlide()" class="w-8 h-8 rounded-full bg-brand-card hover:bg-brand-border border border-brand-border flex items-center justify-center text-white">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Right: Slide Content Editor -->
+              <div class="lg:col-span-5 space-y-4">
+                <div class="bg-brand-surface p-4 rounded-xl border border-brand-border space-y-3">
+                  <label class="text-xs font-bold text-slate-300 block">Edit Slide Headline</label>
+                  <input type="text" id="slideTitleInput" oninput="updateSlideText()" class="w-full bg-brand-card text-white text-xs p-2.5 rounded-lg border border-brand-border focus:border-brand-accent outline-none" value="Stop Tracking Screenshots." />
+
+                  <label class="text-xs font-bold text-slate-300 block">Edit Slide Body / Points</label>
+                  <textarea id="slideBodyInput" rows="4" oninput="updateSlideText()" class="w-full bg-brand-card text-white text-xs p-2.5 rounded-lg border border-brand-border focus:border-brand-accent outline-none custom-scroll">Screenshots invade privacy and breed resentful teams. Focus on delivery velocity instead.</textarea>
+
+                  <div class="pt-2 text-[11px] text-slate-400">
+                    <i class="fa-solid fa-circle-info text-brand-accent mr-1"></i> Changes re-render immediately onto the high-resolution canvas.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. INFOGRAPHIC STUDIO VIEW -->
+          <div id="viewInfographic" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 bg-brand-surface p-4 rounded-xl border border-brand-border">
+              <div>
+                <h3 class="text-sm font-bold text-white">Viral Comparison Infographic</h3>
+                <p class="text-xs text-slate-400">Invasive Surveillance vs. Outcome Velocity with mera.work.</p>
+              </div>
+              <button onclick="downloadInfographicPNG()" class="px-4 py-1.5 rounded-lg bg-brand-primary hover:bg-brand-accent text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-download"></i> Download Infographic PNG
+              </button>
+            </div>
+
+            <div class="flex justify-center">
+              <div class="border-2 border-brand-border rounded-xl overflow-hidden shadow-2xl w-full max-w-[640px]">
+                <canvas id="infoCanvas" width="800" height="460" class="w-full block"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4. VIDEO REEL VIEW -->
+          <div id="viewVideo" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 bg-brand-surface p-4 rounded-xl border border-brand-border">
+              <div>
+                <h3 class="text-sm font-bold text-white">Kinetic Typography Short Reel (9:16)</h3>
+                <p class="text-xs text-slate-400">Animated short video designed for LinkedIn & social video feeds.</p>
+              </div>
+              <button onclick="toggleVideoPlay()" id="playVideoBtn" class="px-4 py-1.5 rounded-lg bg-brand-accent hover:opacity-90 text-white text-xs font-bold transition flex items-center gap-1.5">
+                <i class="fa-solid fa-play"></i> <span>Play Animation</span>
+              </button>
+            </div>
+
+            <div class="flex justify-center">
+              <div class="relative border-4 border-brand-border rounded-2xl overflow-hidden shadow-2xl bg-black">
+                <canvas id="videoCanvas" width="360" height="640" class="w-[300px] h-[533px] block"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= INGESTION MODAL SIMULATION ================= -->
+  <div id="pipelineModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-brand-card border border-brand-border w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-brand-primary/20 border border-brand-accent/40 flex items-center justify-center text-brand-accent">
+          <i class="fa-solid fa-rotate text-lg animate-spin"></i>
+        </div>
+        <div>
+          <h4 class="font-bold text-white text-sm">Autonomous Intelligence Pipeline</h4>
+          <span class="text-xs text-slate-400">Zero-ban safe crawling session</span>
+        </div>
+      </div>
+
+      <div class="space-y-2 text-xs font-mono bg-brand-surface p-4 rounded-xl border border-brand-border" id="pipelineLogs">
+        <p class="text-slate-400">> Initiating proxy cluster...</p>
+      </div>
+
+      <div class="w-full bg-brand-surface h-2 rounded-full overflow-hidden">
+        <div id="pipelineBar" class="bg-gradient-to-r from-brand-primary to-brand-accent h-full w-0 transition-all duration-300"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-auto border-t border-brand-border/60 bg-brand-surface/90 py-4 px-6 text-xs text-slate-400 flex flex-col md:flex-row justify-between items-center gap-3">
+    <div class="flex items-center space-x-2">
+      <span class="font-bold text-white">mera.work</span>
+      <span>• The Human-Centric Productivity & Workforce Intelligence Platform</span>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span>Official Domain: <a href="https://mera.work" target="_blank" class="text-brand-accent hover:underline font-bold">mera.work</a></span>
+      <span>Anti-Ban Engine: <span class="text-emerald-400">Secured</span></span>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT ENGINE ================= -->
+  <script>
+    // --- WEEKLY CONTENT DATA SPECIFIC TO MERA.WORK ---
+    const WEEKLY_PLAN = [
+      {
+        day: "Monday",
+        type: "Carousel_Doc",
+        title: "5 Hidden Traps of Employee Screenshotting",
+        persona: "Tech Founders & HR Executives",
+        hook: "Taking random screenshots of your remote developers isn't management.\nIt's an admission that you don't know what they actually deliver.",
+        body: `Taking random screenshots of your remote developers isn't management.\nIt's an admission that you don't know what they actually deliver.\n\nOver the last 18 months, leading tech and staffing agencies discovered a harsh reality:\n\n1. Developers spend 15 minutes fake-scrolling to look 'active'.\n2. High performers resign because of invasive mistrust.\n3. Middle managers waste 8+ hours a week reviewing blurry screenshots.\n\nModern workforce intelligence measures OUTCOMES and VELOCITY — not random screen capture.\n\nSwipe through this 5-step blueprint on how forward-thinking leaders manage remote teams with full transparency and zero surveillance.\n\n🔗 Built for modern high-trust teams: https://mera.work\n\n#WorkforceAnalytics #RemoteWork #PeopleOperations #mera.work #Productivity`,
+        slides: [
+          { title: "The Screenshot Trap", body: "Why random screenshots are destroying your best remote engineers' morale." },
+          { title: "Trap 1: The Mouse Jiggler Illusion", body: "Activity percentages mean nothing. Anyone can wiggle a cursor for 8 hours." },
+          { title: "Trap 2: High Performer Flight", body: "Your top 10% talent values autonomy. Invasive tools push them to your competitors." },
+          { title: "The Solution: Real Velocity", body: "Track milestone progression and real task output rather than invasive pixels." },
+          { title: "Manage Better with mera.work", body: "Transparent time tracking and automated client billing. Visit mera.work today." }
+        ]
+      },
+      {
+        day: "Tuesday",
+        type: "Infographic_Image",
+        title: "Surveillance vs. Velocity: The 2026 Shift",
+        persona: "Agency Founders & CTOs",
+        hook: "Still checking mouse click counts in 2026?\nHere is what separates companies with 90%+ retention from those with quiet quitters:",
+        body: `Still checking mouse click counts in 2026?\n\nHere is what separates companies with 90%+ retention from companies bleeding their top engineers:\n\n❌ Old Way (Surveillance Tools):\n- Blurry periodic screenshots\n- Penalizing devs for thinking or reading docs\n- Micromanaging bathroom breaks\n- Clunky manual timesheet disputes\n\n✅ The New Standard (Outcome Velocity with mera.work):\n- Real-time project velocity indicators\n- Automatic, audit-proof billing sheets for clients\n- 100% privacy-compliant metrics\n- Clear daily goal completion\n\nTeams that trust their builders get shipped features. Teams that spy get mouse jigglers.\n\nWhich side is your organization on?\n\n👉 Discover the modern approach at https://mera.work\n\n#SoftwareEngineering #Leadership #WorkforceIntelligence #mera.work`,
+        slides: []
+      },
+      {
+        day: "Wednesday",
+        type: "Video",
+        title: "3 Billing Mistakes Costing IT Staffing Agencies $40k/yr",
+        persona: "US IT Staffing & BPO Agency Heads",
+        hook: "If you're still negotiating timesheet adjustments at the end of every month, your agency is leaking profit.",
+        body: `If you're still negotiating timesheet adjustments at the end of every month, your agency is leaking profit.\n\nFor IT staffing agencies and offshore vendors, client billing disputes come down to three issues:\n\n1. Disconnected Timesheets: Manual spreadsheets that don't match GitHub or Jira commits.\n2. Over-surveillance Pushback: US clients refusing to accept invasive screenshots for legal/data privacy reasons.\n3. Unlogged Context Switching: Losing 30–45 billable minutes every day during ad-hoc support.\n\nWith mera.work, client-ready billing reports are generated automatically with zero friction and verified deliverable tracking.\n\nWatch this 30-second breakdown on how to plug the leak.\n\nExplore frictionless client invoicing at https://mera.work\n\n#StaffingIndustry #Recruitment #ITServices #AgencyGrowth #mera.work`,
+        videoBullets: [
+          "Manual timesheets lose 12% billable hours.",
+          "Clients hate invasive screenshot audits.",
+          "Modern agencies use verified outcome metrics.",
+          "Protect your margins with mera.work."
+        ]
+      },
+      {
+        day: "Thursday",
+        type: "Text",
+        title: "The Quiet Quitting Counter-Intuitive Truth",
+        persona: "Chief People Officers & HR Directors",
+        hook: "People don't quiet quit because they hate their work.\nThey quiet quit because they're tired of proving they worked.",
+        body: `People don't quiet quit because they hate their work.\nThey quiet quit because they're tired of proving they worked.\n\nA senior developer recently told me:\n'I completed our database migration 3 days ahead of schedule, but my manager flagged my 62% keyboard activity score.'\n\nThink about how absurd that is.\n\nWe hired them for architectural mastery, but measured them like 19th-century mechanical typists.\n\nWhen you implement intelligent visibility:\n• You celebrate output\n• You spot real bottlenecks before burnout occurs\n• You eliminate meaningless 'green-dot' theater\n\nGive your teams the psychological safety to build great things.\n\nRead our guide on trust-based workforce analytics: https://mera.work\n\n#HumanResources #RemoteWorkCulture #FutureOfWork #mera.work`,
+        slides: []
+      },
+      {
+        day: "Friday",
+        type: "Carousel_Doc",
+        title: "The Weekend Audit: Is Your Time Tracking Costing You Money?",
+        persona: "Operations Directors",
+        hook: "Friday afternoon audit: How much time did your management team waste this week on timesheet reconciliation?",
+        body: `Friday afternoon audit: How much time did your operations team waste this week chasing timesheet submissions?\n\nIf you have 50 employees and your managers spend 30 minutes every Friday chasing down hours, verifying logs, and fixing discrepancies:\n\nThat's 25 management hours burned every single week.\nAt $60/hr average management cost, that's $75,000/year spent just asking people: 'Did you fill your timesheet?'\n\nAutomate tracking. Empower your people. Ship on schedule.\n\nHere is our 5-point checklist before you clock out today.\n\nStart your free trial at https://mera.work\n\n#Operations #Productivity #BusinessEfficiency #mera.work`,
+        slides: [
+          { title: "The Friday Time Drain", body: "Chasing timesheets costs the average 50-person agency over $70,000 annually." },
+          { title: "Point 1: Passive Ingestion", body: "Does your software log time automatically without disrupting flow state?" },
+          { title: "Point 2: Real-Time Verification", body: "Can your clients audit team hours without emailing your account managers?" },
+          { title: "Point 3: Total Morale Check", body: "Does your team appreciate your tool, or are they searching for workarounds?" },
+          { title: "Upgrade to mera.work", body: "Effortless, respectful workforce analytics. Head into the weekend with mera.work." }
+        ]
+      }
+    ];
+
+    // State Variables
+    let activeDayIndex = 0;
+    let currentSlideIndex = 0;
+    let isVideoPlaying = false;
+    let videoAnimFrame = null;
+    let videoStartTime = null;
+
+    // --- INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDayTabs();
+      loadDayContent(0);
+      initCarouselCanvas();
+      drawInfographic();
+      initVideoCanvas();
+      startCountdownTimer();
+    });
+
+    // --- TAB RENDERING ---
+    function renderDayTabs() {
+      const container = document.getElementById('dayTabsContainer');
+      container.innerHTML = '';
+      WEEKLY_PLAN.forEach((item, idx) => {
+        const btn = document.createElement('button');
+        btn.id = `dayTab_${idx}`;
+        btn.onclick = () => loadDayContent(idx);
+        const isActive = idx === activeDayIndex;
+        btn.className = `p-3 rounded-xl border text-left transition ${
+          isActive 
+            ? 'bg-brand-primary/20 border-brand-accent text-white shadow-lg' 
+            : 'bg-brand-surface/70 border-brand-border text-slate-400 hover:text-white hover:border-brand-border/80'
+        }`;
+        
+        let typeIcon = 'fa-file-lines';
+        if (item.type === 'Carousel_Doc') typeIcon = 'fa-layer-group text-purple-400';
+        if (item.type === 'Infographic_Image') typeIcon = 'fa-chart-simple text-amber-400';
+        if (item.type === 'Video') typeIcon = 'fa-video text-cyan-400';
+
+        btn.innerHTML = `
+          <div class="flex items-center justify-between text-[11px] mb-1">
+            <span class="font-bold">${item.day}</span>
+            <i class="fa-solid ${typeIcon}"></i>
+          </div>
+          <div class="text-[11px] font-semibold truncate text-slate-200">${item.title}</div>
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function loadDayContent(idx) {
+      activeDayIndex = idx;
+      currentSlideIndex = 0;
+      renderDayTabs();
+
+      const data = WEEKLY_PLAN[idx];
+      document.getElementById('postDayLabel').textContent = `${data.day} — ${data.type.replace('_', ' ')}`;
+      document.getElementById('postTargetPersona').textContent = `Audience: ${data.persona}`;
+      document.getElementById('postCopyArea').value = data.body;
+      document.getElementById('charCount').textContent = `${data.body.length} characters`;
+
+      // Auto switch or enable appropriate view
+      if (data.type === 'Carousel_Doc') {
+        switchMode('carousel');
+        populateCarouselEditor();
+        renderSlideCanvas();
+      } else if (data.type === 'Infographic_Image') {
+        switchMode('infographic');
+        drawInfographic();
+      } else if (data.type === 'Video') {
+        switchMode('video');
+        initVideoCanvas();
+      } else {
+        switchMode('copy');
+      }
+    }
+
+    function loadStrategicPillar(pillarIndex) {
+      loadDayContent(pillarIndex);
+    }
+
+    // --- TAB SWITCHER ---
+    function switchMode(mode) {
+      const views = ['viewCopy', 'viewCarousel', 'viewInfographic', 'viewVideo'];
+      const tabs = ['tabBtnCopy', 'tabBtnCarousel', 'tabBtnInfographic', 'tabBtnVideo'];
+
+      views.forEach(v => document.getElementById(v).classList.add('hidden'));
+      tabs.forEach(t => {
+        const el = document.getElementById(t);
+        el.classList.remove('border-brand-accent', 'text-white');
+        el.classList.add('border-transparent', 'text-slate-400');
+      });
+
+      if (mode === 'copy') {
+        document.getElementById('viewCopy').classList.remove('hidden');
+        document.getElementById('tabBtnCopy').classList.add('border-brand-accent', 'text-white');
+      } else if (mode === 'carousel') {
+        document.getElementById('viewCarousel').classList.remove('hidden');
+        document.getElementById('tabBtnCarousel').classList.add('border-brand-accent', 'text-white');
+        renderSlideCanvas();
+      } else if (mode === 'infographic') {
+        document.getElementById('viewInfographic').classList.remove('hidden');
+        document.getElementById('tabBtnInfographic').classList.add('border-brand-accent', 'text-white');
+        drawInfographic();
+      } else if (mode === 'video') {
+        document.getElementById('viewVideo').classList.remove('hidden');
+        document.getElementById('tabBtnVideo').classList.add('border-brand-accent', 'text-white');
+        initVideoCanvas();
+      }
+    }
+
+    // --- COPY FUNCTIONALITY ---
+    function copyPostToClipboard() {
+      const copyText = document.getElementById('postCopyArea').value;
+      navigator.clipboard.writeText(copyText).then(() => {
+        const btnText = document.getElementById('copyBtnText');
+        btnText.textContent = "Copied to Clipboard!";
+        setTimeout(() => {
+          btnText.textContent = "Copy Post Copy";
+        }, 2000);
+      });
+    }
+
+    function regenerateCopy() {
+      const textarea = document.getElementById('postCopyArea');
+      textarea.value = `[AI Variation Generated]\n\n` + textarea.value;
+      document.getElementById('charCount').textContent = `${textarea.value.length} characters`;
+    }
+
+    // --- CAROUSEL RENDER ENGINE ---
+    function initCarouselCanvas() {
+      renderSlideCanvas();
+    }
+
+    function populateCarouselEditor() {
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      const slides = dayData.slides || [];
+      if (slides.length > 0) {
+        document.getElementById('slideTitleInput').value = slides[currentSlideIndex].title;
+        document.getElementById('slideBodyInput').value = slides[currentSlideIndex].body;
+        document.getElementById('slideIndicator').textContent = `Slide ${currentSlideIndex + 1} of ${slides.length}`;
+      }
+    }
+
+    function updateSlideText() {
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      if (dayData.slides && dayData.slides[currentSlideIndex]) {
+        dayData.slides[currentSlideIndex].title = document.getElementById('slideTitleInput').value;
+        dayData.slides[currentSlideIndex].body = document.getElementById('slideBodyInput').value;
+        renderSlideCanvas();
+      }
+    }
+
+    function prevSlide() {
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      if (dayData.slides && currentSlideIndex > 0) {
+        currentSlideIndex--;
+        populateCarouselEditor();
+        renderSlideCanvas();
+      }
+    }
+
+    function nextSlide() {
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      if (dayData.slides && currentSlideIndex < dayData.slides.length - 1) {
+        currentSlideIndex++;
+        populateCarouselEditor();
+        renderSlideCanvas();
+      }
+    }
+
+    // Helper: Draws the exact mera.work vector logo on any HTML5 canvas
+    function drawMeraWorkLogo(ctx, x, y, scale = 1.0) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+
+      // Gradient for main clock ring arcs
+      const purpleGrad = ctx.createLinearGradient(0, 0, 100, 100);
+      purpleGrad.addColorStop(0, "#7C4DFF");
+      purpleGrad.addColorStop(1, "#512DA8");
+
+      // Needle grad
+      const needleGrad = ctx.createLinearGradient(0, 0, 100, 50);
+      needleGrad.addColorStop(0, "#9C6BFF");
+      needleGrad.addColorStop(1, "#4A148C");
+
+      ctx.lineWidth = 14;
+      ctx.lineCap = "round";
+
+      // Top arc (lavender)
+      ctx.strokeStyle = "#E1D5FA";
+      ctx.beginPath();
+      ctx.arc(50, 50, 32, -Math.PI * 0.7, -Math.PI * 0.3);
+      ctx.stroke();
+
+      // Bottom arc (lavender)
+      ctx.beginPath();
+      ctx.arc(50, 50, 32, Math.PI * 0.3, Math.PI * 0.7);
+      ctx.stroke();
+
+      // Left arc (primary purple)
+      ctx.strokeStyle = purpleGrad;
+      ctx.beginPath();
+      ctx.arc(50, 50, 32, Math.PI * 0.75, Math.PI * 1.25);
+      ctx.stroke();
+
+      // Right arc (primary purple)
+      ctx.beginPath();
+      ctx.arc(50, 50, 32, -Math.PI * 0.25, Math.PI * 0.25);
+      ctx.stroke();
+
+      // Clock hands / V-shape checkmark
+      ctx.strokeStyle = needleGrad;
+      ctx.lineWidth = 10;
+      ctx.lineJoin = "round";
+      ctx.beginPath();
+      ctx.moveTo(30, 25);
+      ctx.lineTo(50, 52);
+      ctx.lineTo(85, 18);
+      ctx.stroke();
+
+      // Center pivot dot
+      ctx.fillStyle = "#7C4DFF";
+      ctx.beginPath();
+      ctx.arc(50, 52, 8, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Text "mera"
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 38px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("mera", 100, 54);
+
+      // Trademark
+      ctx.font = "bold 11px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("®", 188, 28);
+
+      // Text "work"
+      ctx.fillStyle = "#7C4DFF";
+      ctx.font = "bold 34px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("work", 102, 84);
+
+      ctx.restore();
+    }
+
+    function renderSlideCanvas() {
+      const canvas = document.getElementById('carouselCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      const slides = dayData.slides || [
+        { title: "mera.work Blueprint", body: "Intelligent workforce insights for high-performance teams." }
+      ];
+      const slide = slides[currentSlideIndex] || slides[0];
+
+      // Background with sleek deep purple brand tone
+      const bgGrad = ctx.createLinearGradient(0, 0, 540, 540);
+      bgGrad.addColorStop(0, "#191329");
+      bgGrad.addColorStop(1, "#0D0A14");
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 540, 540);
+
+      // Subtle atmospheric glow
+      const glowGrad = ctx.createRadialGradient(270, 0, 20, 270, 0, 350);
+      glowGrad.addColorStop(0, "rgba(124, 77, 255, 0.15)");
+      glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+      ctx.fillStyle = glowGrad;
+      ctx.fillRect(0, 0, 540, 540);
+
+      // Header: Draw mera.work Logo
+      drawMeraWorkLogo(ctx, 36, 36, 0.65);
+
+      // Domain watermark top right
+      ctx.fillStyle = "#7C4DFF";
+      ctx.font = "bold 13px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("https://mera.work", 504, 60);
+
+      // Slide Category Tag
+      ctx.fillStyle = "#E1D5FA";
+      ctx.font = "600 12px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("WORKFORCE INSIGHTS", 504, 78);
+      ctx.textAlign = "left";
+
+      // Divider Line
+      ctx.strokeStyle = "#2E244A";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(36, 115);
+      ctx.lineTo(504, 115);
+      ctx.stroke();
+
+      // Main Title Text (Wrapped)
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 26px 'Plus Jakarta Sans', sans-serif";
+      wrapText(ctx, slide.title, 36, 190, 468, 36);
+
+      // Body Text
+      ctx.fillStyle = "#C8BFE2";
+      ctx.font = "500 17px 'Plus Jakarta Sans', sans-serif";
+      wrapText(ctx, slide.body, 36, 290, 468, 28);
+
+      // Footer Bar
+      ctx.fillStyle = "#7C4DFF";
+      ctx.fillRect(36, 485, 468, 2);
+
+      // Slide Numbers & CTA
+      ctx.fillStyle = "#8E7DA8";
+      ctx.font = "600 13px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText(`Slide ${currentSlideIndex + 1} of ${slides.length}`, 36, 515);
+
+      ctx.fillStyle = "#E1D5FA";
+      ctx.font = "bold 13px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText(currentSlideIndex === slides.length - 1 ? "Visit mera.work →" : "Swipe Next →", 504, 515);
+      ctx.textAlign = "left";
+    }
+
+    function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
+      const words = text.split(' ');
+      let line = '';
+      for (let n = 0; n < words.length; n++) {
+        const testLine = line + words[n] + ' ';
+        const metrics = ctx.measureText(testLine);
+        if (metrics.width > maxWidth && n > 0) {
+          ctx.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += lineHeight;
+        } else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, y);
+    }
+
+    function downloadCurrentSlide() {
+      const canvas = document.getElementById('carouselCanvas');
+      const link = document.createElement('a');
+      link.download = `mera_work_slide_${currentSlideIndex + 1}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // Multi-page PDF generation using jsPDF
+    function downloadFullCarouselPDF() {
+      const { jsPDF } = window.jspdf;
+      const pdf = new jsPDF({
+        orientation: 'p',
+        unit: 'px',
+        format: [540, 540]
+      });
+
+      const dayData = WEEKLY_PLAN[activeDayIndex];
+      const slides = dayData.slides || [];
+      const savedIndex = currentSlideIndex;
+
+      slides.forEach((_, idx) => {
+        currentSlideIndex = idx;
+        renderSlideCanvas();
+        const canvas = document.getElementById('carouselCanvas');
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        if (idx > 0) pdf.addPage([540, 540], 'p');
+        pdf.addImage(imgData, 'JPEG', 0, 0, 540, 540);
+      });
+
+      // Restore view
+      currentSlideIndex = savedIndex;
+      populateCarouselEditor();
+      renderSlideCanvas();
+
+      pdf.save(`mera_work_carousel_${dayData.day.toLowerCase()}.pdf`);
+    }
+
+    // --- INFOGRAPHIC GENERATOR ---
+    function drawInfographic() {
+      const canvas = document.getElementById('infoCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      // Background
+      const bg = ctx.createLinearGradient(0, 0, 800, 460);
+      bg.addColorStop(0, "#171224");
+      bg.addColorStop(1, "#0B0910");
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, 800, 460);
+
+      // Logo Header
+      drawMeraWorkLogo(ctx, 40, 25, 0.7);
+
+      ctx.fillStyle = "#7C4DFF";
+      ctx.font = "bold 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "right";
+      ctx.fillText("https://mera.work", 760, 50);
+      ctx.fillStyle = "#E1D5FA";
+      ctx.font = "500 12px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("Workforce Intelligence Benchmark 2026", 760, 68);
+      ctx.textAlign = "left";
+
+      // Title
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 20px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("Surveillance Tracking vs. Outcome Velocity", 40, 120);
+
+      // Left Box: Invasive Surveillance
+      ctx.fillStyle = "#221929";
+      ctx.beginPath();
+      ctx.roundRect(40, 145, 340, 270, 14);
+      ctx.fill();
+      ctx.strokeStyle = "#4D2638";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = "#FF5252";
+      ctx.font = "bold 16px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("❌ Old Way (Surveillance)", 60, 185);
+
+      const oldItems = [
+        "Invasive screen grabs & spy logs",
+        "Mouse-jiggler arms race",
+        "Breeds quiet quitting & attrition",
+        "Disputed client billing sheets"
+      ];
+      ctx.fillStyle = "#E0D0DC";
+      ctx.font = "13px 'Plus Jakarta Sans', sans-serif";
+      oldItems.forEach((text, i) => {
+        ctx.fillText("• " + text, 60, 230 + (i * 38));
+      });
+
+      // Right Box: mera.work Velocity
+      const gradCard = ctx.createLinearGradient(420, 145, 760, 415);
+      gradCard.addColorStop(0, "#251B3D");
+      gradCard.addColorStop(1, "#181228");
+      ctx.fillStyle = gradCard;
+      ctx.beginPath();
+      ctx.roundRect(420, 145, 340, 270, 14);
+      ctx.fill();
+      ctx.strokeStyle = "#7C4DFF";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = "#B388FF";
+      ctx.font = "bold 16px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("✅ The mera.work Standard", 440, 185);
+
+      const newItems = [
+        "100% Privacy-first metrics",
+        "Automated audit-ready timesheets",
+        "High trust = 93%+ dev retention",
+        "Real deliverable milestone tracking"
+      ];
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "500 13px 'Plus Jakarta Sans', sans-serif";
+      newItems.forEach((text, i) => {
+        ctx.fillText("✔ " + text, 440, 230 + (i * 38));
+      });
+    }
+
+    function downloadInfographicPNG() {
+      const canvas = document.getElementById('infoCanvas');
+      const link = document.createElement('a');
+      link.download = `mera_work_infographic.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    }
+
+    // --- KINETIC VIDEO REEL SIMULATOR ---
+    function initVideoCanvas() {
+      const canvas = document.getElementById('videoCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = "#120E1C";
+      ctx.fillRect(0, 0, 360, 640);
+
+      drawMeraWorkLogo(ctx, 40, 40, 0.65);
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 18px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("Kinetic Video Reel", 180, 290);
+
+      ctx.fillStyle = "#C8BFE2";
+      ctx.font = "13px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("Click 'Play Animation' to preview", 180, 320);
+
+      ctx.fillStyle = "#7C4DFF";
+      ctx.font = "bold 14px 'Plus Jakarta Sans', sans-serif";
+      ctx.fillText("https://mera.work", 180, 560);
+      ctx.textAlign = "left";
+    }
+
+    function toggleVideoPlay() {
+      const btn = document.getElementById('playVideoBtn');
+      if (isVideoPlaying) {
+        isVideoPlaying = false;
+        cancelAnimationFrame(videoAnimFrame);
+        btn.innerHTML = `<i class="fa-solid fa-play"></i> <span>Play Animation</span>`;
+        initVideoCanvas();
+      } else {
+        isVideoPlaying = true;
+        videoStartTime = performance.now();
+        btn.innerHTML = `<i class="fa-solid fa-pause"></i> <span>Pause</span>`;
+        animateVideo();
+      }
+    }
+
+    function animateVideo() {
+      if (!isVideoPlaying) return;
+      const canvas = document.getElementById('videoCanvas');
+      const ctx = canvas.getContext('2d');
+
+      const now = performance.now();
+      const elapsed = (now - videoStartTime) / 1000; // in seconds
+      const bullets = [
+        "Manual timesheets lose 12% billable hours.",
+        "Clients hate invasive screenshot audits.",
+        "Modern agencies measure delivered velocity.",
+        "Scale your agency with mera.work."
+      ];
+      const durationPerSlide = 2.5;
+      const totalDuration = bullets.length * durationPerSlide;
+      const currentLoopTime = elapsed % totalDuration;
+      const bulletIndex = Math.floor(currentLoopTime / durationPerSlide);
+      const subTime = currentLoopTime % durationPerSlide;
+
+      // Clear & Background
+      ctx.fillStyle = "#140F21";
+      ctx.fillRect(0, 0, 360, 640);
+
+      // Dynamic Animated Glow Orb
+      const orbY = 320 + Math.sin(elapsed * 2) * 40;
+      const grad = ctx.createRadialGradient(180, orbY, 10, 180, orbY, 200);
+      grad.addColorStop(0, "rgba(124, 77, 255, 0.35)");
+      grad.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 360, 640);
+
+      // Logo on Top
+      drawMeraWorkLogo(ctx, 35, 45, 0.7);
+
+      // Kinetic Typography Effect (Slide up + Fade In)
+      const currentText = bullets[bulletIndex];
+      const alpha = Math.min(1, subTime * 2.5);
+      const textOffset = Math.max(0, (1 - subTime * 2) * 30);
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = "#FFFFFF";
+      ctx.font = "bold 22px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      wrapText(ctx, currentText, 180, 280 + textOffset, 280, 32);
+      ctx.restore();
+
+      // Audio waveform simulation
+      ctx.fillStyle = "#7C4DFF";
+      for (let i = 0; i < 20; i++) {
+        const barHeight = Math.abs(Math.sin(elapsed * 6 + i)) * 32 + 6;
+        ctx.fillRect(80 + (i * 10), 450 - barHeight / 2, 5, barHeight);
+      }
+
+      // Progress bar at bottom
+      const progress = currentLoopTime / totalDuration;
+      ctx.fillStyle = "#271E3C";
+      ctx.fillRect(30, 580, 300, 4);
+      ctx.fillStyle = "#7C4DFF";
+      ctx.fillRect(30, 580, 300 * progress, 4);
+
+      // Domain link at bottom
+      ctx.fillStyle = "#C8BFE2";
+      ctx.font = "bold 12px 'Plus Jakarta Sans', sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("mera.work", 180, 610);
+      ctx.textAlign = "left";
+
+      videoAnimFrame = requestAnimationFrame(animateVideo);
+    }
+
+    // --- CRAWLER SIMULATION ENGINE (SAFE ZERO-BAN RUN) ---
+    function triggerEngineRun() {
+      const modal = document.getElementById('pipelineModal');
+      const bar = document.getElementById('pipelineBar');
+      const logs = document.getElementById('pipelineLogs');
+      modal.classList.remove('hidden');
+
+      const steps = [
+        "> Initializing Headless Residential Proxy Gateway...",
+        "> Scanning Public Feeds: Hubstaff, Time Doctor, Insightful...",
+        "> Aggregating Pain Points: 'Micromanagement Complaints' (+42% spike)...",
+        "> Generating 5 Tailored Social Assets for mera.work...",
+        "> Packaging LinkedIn Document PDF & Carousels...",
+        "> Cycle Complete! Zero Account Exposure Guaranteed."
+      ];
+
+      logs.innerHTML = '';
+      bar.style.width = '0%';
+
+      steps.forEach((step, index) => {
+        setTimeout(() => {
+          const p = document.createElement('p');
+          p.className = index === steps.length - 1 ? 'text-emerald-400 font-bold' : 'text-slate-300';
+          p.textContent = step;
+          logs.appendChild(p);
+          bar.style.width = `${((index + 1) / steps.length) * 100}%`;
+
+          if (index === steps.length - 1) {
+            setTimeout(() => {
+              modal.classList.add('hidden');
+              // Increment signals counter
+              const sig = document.getElementById('statSignals');
+              sig.textContent = (parseInt(sig.textContent.replace(',', '')) + 18).toLocaleString();
+            }, 1200);
+          }
+        }, (index + 1) * 650);
+      });
+    }
+
+    // --- COUNTDOWN TIMER ---
+    function startCountdownTimer() {
+      let seconds = 3 * 3600 + 42 * 60 + 15;
+      const display = document.getElementById('scanCountdown');
+      setInterval(() => {
+        seconds--;
+        if (seconds <= 0) seconds = 4 * 3600;
+        const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+        const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+        display.textContent = `${h}:${m}:${s}`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
